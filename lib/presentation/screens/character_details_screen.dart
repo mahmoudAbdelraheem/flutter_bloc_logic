@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_logic/bussiness_logic/cubit/characters_cubit.dart';
 import 'package:flutter_bloc_logic/constants/my_colors.dart';
 import 'package:flutter_bloc_logic/data/models/charactar.dart';
 
@@ -69,6 +71,26 @@ class CharactersDetailsScreen extends StatelessWidget {
     );
   }
 
+  Widget checkIfQuotesAreLoaded(CharactersState state) {
+    if (state is QuotesLoaded) {
+      return displayRandomQuotsOrEmptySpace(state);
+    } else {
+      return const Center(
+        child: CircularProgressIndicator(
+          color: MyColors.myWhite,
+          strokeWidth: 2,
+        ),
+      );
+    }
+  }
+
+  //todo : next day
+  Widget displayRandomQuotsOrEmptySpace(CharactersState state) {
+    var quotes = (state).myQuote;
+    if (quotes.length != 0) {
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,6 +119,11 @@ class CharactersDetailsScreen extends StatelessWidget {
                           'episode : ', selectedCharacter.episode.join(' / ')),
                       buildDivider(300),
                       const SizedBox(height: 20),
+                      BlocBuilder<CharactersCubit, CharactersState>(
+                        builder: (context, state) {
+                          return checkIfQuotesAreLoaded(state);
+                        },
+                      )
                     ],
                   ),
                 ),
