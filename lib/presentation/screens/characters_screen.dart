@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_logic/bussiness_logic/cubit/characters_cubit.dart';
-import 'package:flutter_bloc_logic/constants/my_colors.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 
-import 'package:flutter_bloc_logic/data/models/charactar.dart';
-
+import '../../bussiness_logic/cubit/characters_cubit.dart';
+import '../../constants/my_colors.dart';
+import '../../data/models/charactar.dart';
 import '../widgets/character_item.dart';
 
 class CharactersScreen extends StatefulWidget {
@@ -171,6 +171,30 @@ class _CharactersScreenState extends State<CharactersScreen> {
     );
   }
 
+  Widget buildNoInternetWidget() {
+    return Center(
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text(
+              "Can't Connect .. check internet",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: MyColors.myGrey,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Image.asset('assets/images/offline.png'),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -184,7 +208,24 @@ class _CharactersScreenState extends State<CharactersScreen> {
         title: _isSearch ? _buildSearchField() : _buildAppBarTitle(),
         actions: _buildAppBarActions(),
       ),
-      body: buildBlocWidget(),
+      body: OfflineBuilder(
+        connectivityBuilder: (BuildContext context,
+            ConnectivityResult connectivity, Widget child) {
+          final bool connected = connectivity != ConnectivityResult.none;
+          if (connected) {
+            return buildBlocWidget();
+          } else {
+            return buildNoInternetWidget();
+          }
+        },
+        child: const Center(
+          child: CircularProgressIndicator(
+            color: MyColors.myYellow,
+          ),
+        ),
+      ),
+
+      //buildBlocWidget(),
     );
   }
 }

@@ -1,8 +1,14 @@
+import 'dart:math';
+
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_logic/bussiness_logic/cubit/characters_cubit.dart';
-import 'package:flutter_bloc_logic/constants/my_colors.dart';
-import 'package:flutter_bloc_logic/data/models/charactar.dart';
+import '../../bussiness_logic/cubit/characters_cubit.dart';
+import '../../constants/my_colors.dart';
+import '../../constants/strings.dart';
+
+import '../../data/models/charactar.dart';
+import '../../data/models/quote.dart';
 
 class CharactersDetailsScreen extends StatelessWidget {
   final Character selectedCharacter;
@@ -85,14 +91,41 @@ class CharactersDetailsScreen extends StatelessWidget {
   }
 
   //todo : next day
-  Widget displayRandomQuotsOrEmptySpace(CharactersState state) {
-    var quotes = (state).myQuote;
-    if (quotes.length != 0) {
-    } else {}
+  Widget displayRandomQuotsOrEmptySpace(state) {
+    List<Quote> quotes = (state).myQuote;
+    if (quotes.isNotEmpty) {
+      return Center(
+        child: DefaultTextStyle(
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 20,
+            color: MyColors.myWhite,
+            shadows: [
+              Shadow(
+                color: MyColors.myYellow,
+                blurRadius: 7,
+                offset: Offset(0, 0),
+              )
+            ],
+          ),
+          child: AnimatedTextKit(
+            repeatForever: true,
+            animatedTexts: [
+              FlickerAnimatedText(quotes[0].quote),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    int randomQuoteCategory = Random().nextInt(myQuotesCategory.length - 1);
+    BlocProvider.of<CharactersCubit>(context)
+        .getRandomQuote(myQuotesCategory[randomQuoteCategory]);
     return Scaffold(
       backgroundColor: MyColors.myGrey,
       body: CustomScrollView(

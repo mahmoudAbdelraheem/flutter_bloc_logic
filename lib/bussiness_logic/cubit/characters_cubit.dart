@@ -1,13 +1,14 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_bloc_logic/data/models/charactar.dart';
-import 'package:flutter_bloc_logic/data/models/quote.dart';
-import 'package:flutter_bloc_logic/data/repository/character_repository.dart';
+import '../../data/models/charactar.dart';
+import '../../data/models/quote.dart';
+import '../../data/repository/character_repository.dart';
 
 part 'characters_state.dart';
 
 class CharactersCubit extends Cubit<CharactersState> {
   final CharacterRepository characterRepository;
   List<Character> charactar = [];
+  List<Quote> quote = [];
 
   CharactersCubit(this.characterRepository) : super(CharactersInitial());
 
@@ -22,6 +23,7 @@ class CharactersCubit extends Cubit<CharactersState> {
   void getRandomQuote(String category) {
     characterRepository.getRandomQuote(category).then((quotes) {
       emit(QuotesLoaded(quotes));
+      quote = quotes;
     });
   }
 }

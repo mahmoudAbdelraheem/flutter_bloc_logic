@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc_logic/constants/my_colors.dart';
-import 'package:flutter_bloc_logic/data/models/charactar.dart';
+import '../../constants/my_colors.dart';
+import '../../data/models/charactar.dart';
 
 import '../../constants/strings.dart';
 

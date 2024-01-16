@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_bloc_logic/constants/strings.dart';
+import '../../constants/strings.dart';
 
 class CharacterWebServices {
   late Dio dio;
@@ -40,10 +40,10 @@ class CharacterWebServices {
     try {
       Response response =
           await quoteDio.get('quotes', queryParameters: {'category': category});
-      print(response.data.toString());
+      //print(response.data.toString());
       return response.data;
     } catch (e) {
-      print('Error in catch of get all character dio => ${e.toString()}');
+      //print('Error in catch of get all character dio => ${e.toString()}');
       return []; // to return empty list;
     }
   }

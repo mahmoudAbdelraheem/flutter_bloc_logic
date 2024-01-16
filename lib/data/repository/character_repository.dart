@@ -1,6 +1,6 @@
-import 'package:flutter_bloc_logic/data/models/charactar.dart';
-import 'package:flutter_bloc_logic/data/models/quote.dart';
-import 'package:flutter_bloc_logic/data/web_services/character_web_services.dart';
+import '../models/charactar.dart';
+import '../models/quote.dart';
+import '../web_services/character_web_services.dart';
 
 class CharacterRepository {
   final CharacterWebServices characterWebServices;

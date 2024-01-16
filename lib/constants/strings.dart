@@ -8,3 +8,14 @@ const String getFirst15Characters =
     'character/1,2,3,4,5,6,7,8,9,10,11,12,13,14,15';
 const charactersScreen = '/';
 const charactersDetailsScreen = '/characer_details';
+
+const List<String> myQuotesCategory = [
+  'amazing',
+  'computers',
+  'experience',
+  'failure',
+  'famous',
+  'life',
+  'success',
+  'money',
+];
